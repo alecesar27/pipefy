@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Card{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Create Card</h1>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Novo Card</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Create Card</button>
+            </form>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-secondary" href="{% url 'home' %}">Voltar para a página inicial</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

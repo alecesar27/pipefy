@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Cards{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Cards</h1>
+
+        <div class="row">
+            {% if cards %}
+                {% for id, value in cards.items %}
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ value }}</h5>
+                                <a href="{% url 'read_card_details' pipe_id=pipe_id id_card=id %}">Details</a>
+                                <a href="{% url 'update_card_title' card_id=id %}">Modify</a>                                                                
+                                <form method="post" action="{% url 'delete_card' card_id=id %}" style="display:inline;" id="delete-form-{{ id }}">
+                                    {% csrf_token %}
+                                    <a href="#" class="text-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-id="delete-form-{{ id }}">Delete</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No cards found.</p>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <a class="btn btn-success" href="{% url 'create_card' pipe_id=pipe_id %}">New Card</a>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a class="btn btn-primary" href="{% url 'home' %}">Voltar para a página inicial</a>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza de que deseja excluir este card?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script para lidar com a confirmação da exclusão
+        document.addEventListener('DOMContentLoaded', function () {
+            let deleteFormId;
+
+            // Quando o link de exclusão for clicado
+            document.querySelectorAll('a[data-target="#confirmDeleteModal"]').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    deleteFormId = this.getAttribute('data-form-id');
+                });
+            });
+
+            // Quando o botão de confirmação for clicado
+            document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+                document.getElementById(deleteFormId).submit();
+            });
+        });
+    </script>
+
+{% endblock %}

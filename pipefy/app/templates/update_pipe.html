@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Pipe{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Update Pipe</h1>
+        <form action="{% url 'update_pipe' pipe_id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update Pipe</button>
+        </form>
+        <div class="mt-3">
+            <a class="btn btn-secondary" href="{% url 'home' %}">Voltar para a página inicial</a>
+        </div>
+    </div>
+{% endblock %}

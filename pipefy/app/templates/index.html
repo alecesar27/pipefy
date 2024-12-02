@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Pipes{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Pipes</h1>
+    <div class="row">
+        {% for org in organizations %}   
+            <div class="col-md-12">
+                <h4>{{ org.name }}</h4>
+                <a href="{% url 'create_pipe' organization_id=org.id %}" class="btn btn-primary mb-3">New Pipe</a>
+            </div>         
+            {% for pipe in org.pipes %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pipe.name }}</h5>
+                            <a href="{% url 'read_cards' pipe_id=pipe.id  %}">View Cards</a>
+                            <a href="{% url 'update_pipe' pipe_id=pipe.id  %}">Modify</a>             
+                            <form method="post" action="{% url 'delete_pipe' pipe_id=pipe.id %}" style="display:inline;" id="delete-form-{{ pipe.id }}">
+                                {% csrf_token %}
+                                <a href="#" class="text-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-id="delete-form-{{ pipe.id }}">Delete</a>
+                            </form>                  
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem certeza de que deseja excluir este pipe?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Script para lidar com a confirmação da exclusão
+    document.addEventListener('DOMContentLoaded', function () {
+        let deleteFormId;
+
+        // Quando o link de exclusão for clicado
+        document.querySelectorAll('a[data-target="#confirmDeleteModal"]').forEach(function (link) {
+            link.addEventListener('click', function () {
+                deleteFormId = this.getAttribute('data-form-id');
+            });
+        });
+
+        // Quando o botão de confirmação for clicado
+        document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+            document.getElementById(deleteFormId).submit();
+        });
+    });
+</script>
+
+{% endblock %}

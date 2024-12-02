@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Cartão{% endblock %}
+
+{% block content %} 
+    <h1>Detalhes do Cartão</h1>
+
+    {% if card_details %}
+        <div class="card">
+            <div class="card-body">
+                {% for card_id, details in card_details.items %}
+                    <h2 class="card-title">{{ details.title }}</h2>                   
+                    <h3>Campos:</h3>
+                    <ul class="list-group list-group-flush">
+                        {% for field in details.fields %}
+                            {% if field.name == "Anexo" %}
+                                {% with field.value|slice:":-1" as json_value %}
+                                    {% with json_value|slice:"1:" as url_value %}
+                                        <li class="list-group-item">{{ field.name }}: 
+                                            <a href="{{ url_value }}" class="btn btn-link" download>
+                                                Baixar Anexo
+                                            </a>
+                                        </li>
+                                    {% endwith %}
+                                {% endwith %}
+                            {% else %}
+                                <li class="list-group-item">
+                                    <strong>{{ field.name }}:</strong> {{ field.report_value }}
+                                    <br>
+                                    <small class="text-muted">Atualizado em: {{ field.updated_at }}</small>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p>Nenhum detalhe do cartão encontrado.</p>
+    {% endif %}
+
+    <div class="mt-3">
+        <a class="btn btn-primary" href="{% url 'home' %}">Voltar para a página inicial</a>
+    </div>
+{% endblock %}

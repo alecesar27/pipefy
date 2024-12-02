@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Card Title{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Update Card Title</h1>
+        <form action="{% url 'update_card_title' card_id %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="title" value="{{ title }}">
+            <button type="submit" class="btn btn-primary">Ok</button>
+        </form>
+        <div class="mt-3">
+            <a class="btn btn-secondary" href="{% url 'home' %}">Voltar para a página inicial</a>
+        </div>
+    </div>
+{% endblock %}

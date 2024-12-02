@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Pipe{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Pipes</h1>
+    <div class="row">
+        {% for org in organizations %}            
+            {% for pipe in org.pipes %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <!-- <img src="..." class="card-img-top" alt="..."> -->
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pipe.name }}</h5>
+                            <a class="nav-link" href="{% url 'read_cards' pipe_id=pipe.id  %}">View Cards</a>
+                            <a class="nav-link" href="{% url 'update_pipe' pipe_id=pipe.id %}">Update Pipe</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
