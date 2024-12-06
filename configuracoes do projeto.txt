@@ -1,0 +1,46 @@
+ambiente virtual python
+
+python3 -m venv venv
+
+pip freeze > requirements.txt
+
+pip install -r requirements.txt
+
+Criando uma imagem do Docker com o arquivo Dockerfile
+docker build -t meu_app_fastapi .
+
+Criando uma imagem com docker compose
+docker-compose build
+docker-compose up
+
+Se estiver usando o Dockerfile
+docker run -d -p 8000:8000 meu_app_fastapi
+
+acessando a aplicado
+http://localhost:8000/docs.
+
+Verificar um processo rodando 
+docker ps -a
+Removendo um processo
+docker rm id processo
+
+removendo uma imagem
+
+docker rmi id
+
+git hub https://github.com/alecesar27/pipefy.git
+
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/alecesar27/pipefy.git
+git push -u origin main
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/alecesar27/pipefy.git
+git branch -M main
+git push -u origin main
+
+
+

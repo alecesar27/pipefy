@@ -477,7 +477,7 @@ def delete_card(card_id):
 #print(get_all_cards(305087031))
 #ids=['305087790']
 #print(list_pipes(url,ids))
-print(get_card_details_phase(305087031,'1025275646'))
+#print(get_card_details_phase(305087031,'1025275646'))
 #print(get_organization())
 #print(list_organizations())
 #print(get_card_details(305087031,'1025275646'))
