@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import home, login, signup, logout, list_pipes, create_pipe, update_pipe, create_phase, create_card, read_cards,read_card_details, delete_card,update_card_title,delete_pipe
+from .views import home, login_view, signup, logout_view, list_pipes, create_pipe, update_pipe, create_phase, create_card, read_cards,read_card_details, delete_card,update_card_title,delete_pipe
 
 urlpatterns = [
-    path('', login, name='login'),
+    path('login/', login_view, name='login'),
     path('signup/', signup, name='signup'),
-    path('logout/', logout, name='logout'),
+    path('logout/', logout_view, name='logout'),
     path('home/', home, name='home'),
+    path('', home, name='home'),    
     path('create-pipe/<int:organization_id>/', create_pipe, name='create_pipe'),
     path('update-pipe/<int:pipe_id>', update_pipe, name='update_pipe'),
     path('create-phase/', create_phase, name='create_phase'),

@@ -1,12 +1,12 @@
-from django.contrib.auth import logout,authenticate, login as auth_login
+from django.contrib.auth import logout as auth_logout, authenticate, login as auth_login
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 import requests
 from .forms import SignUpForm,  LoginForm, CreatePipeForm, UpdatePipeForm, CreatePhaseForm, CreateCardForm,UpdateCardForm
-import asyncio
 
 
 BASE_API_URL = 'http://localhost'
@@ -15,6 +15,7 @@ BASE_API_URL = 'http://localhost'
 def home(request):
 
     return list_pipes(request)
+
 
 def signup(request):
     if request.method == 'POST':
@@ -31,7 +32,8 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
-def login(request):
+
+def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -49,8 +51,10 @@ def login(request):
     
     return render(request, 'login.html', {'form': form})
 
-def logout(request):
-    logout(request)  # Faz o logout do usuário
+
+@login_required
+def logout_view(request):
+    auth_logout(request)  # Faz o logout do usuário
     return redirect('login')  # Redireciona para a página de login após logout
 
 @login_required

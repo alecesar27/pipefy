@@ -4,30 +4,43 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1>Pipes</h1>
-    <div class="row">
-        {% for org in organizations %}   
-            <div class="col-md-12">
-                <h4>{{ org.name }}</h4>
-                <a href="{% url 'create_pipe' organization_id=org.id %}" class="btn btn-primary mb-3">New Pipe</a>
-            </div>         
-            {% for pipe in org.pipes %}
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ pipe.name }}</h5>
-                            <a href="{% url 'read_cards' pipe_id=pipe.id  %}">View Cards</a>
-                            <a href="{% url 'update_pipe' pipe_id=pipe.id  %}">Modify</a>             
-                            <form method="post" action="{% url 'delete_pipe' pipe_id=pipe.id %}" style="display:inline;" id="delete-form-{{ pipe.id }}">
-                                {% csrf_token %}
-                                <a href="#" class="text-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-id="delete-form-{{ pipe.id }}">Delete</a>
-                            </form>                  
+    {% if user.is_authenticated %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        <h1>Pipes</h1>
+        <div class="row">
+            {% for org in organizations %}   
+                <div class="col-md-12">
+                    <h4>{{ org.name }}</h4>
+                    <a href="{% url 'create_pipe' organization_id=org.id %}" class="btn btn-primary mb-3">New Pipe</a>
+                </div>         
+                {% for pipe in org.pipes %}
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ pipe.name }}</h5>
+                                <a href="{% url 'read_cards' pipe_id=pipe.id  %}">View Cards</a>
+                                <a href="{% url 'update_pipe' pipe_id=pipe.id  %}">Modify</a>             
+                                <form method="post" action="{% url 'delete_pipe' pipe_id=pipe.id %}" style="display:inline;" id="delete-form-{{ pipe.id }}">
+                                    {% csrf_token %}
+                                    <a href="#" class="text-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-id="delete-form-{{ pipe.id }}">Delete</a>
+                                </form>                  
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    </div>
+        </div>
+    {% else %}
+        <h1>Acesso Negado</h1>
+        <p>Você precisa estar autenticado para acessar esta página.</p>
+        <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+    {% endif %}
 </div>
 
 <!-- Modal de Confirmação -->

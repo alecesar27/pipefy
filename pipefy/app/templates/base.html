@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Pipe Management System{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function submitLogoutForm() {
+            document.getElementById('logout-form').submit();
+        }
+    </script>
 </head>
 <body>
 
@@ -22,9 +27,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'list_pipes' %}">Pipes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Logout</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <form id="logout-form" method="post" action="{% url 'logout' %}" style="display:none;">
+                            {% csrf_token %}
+                        </form>
+                        <a class="nav-link" href="javascript:void(0);" onclick="submitLogoutForm()">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
