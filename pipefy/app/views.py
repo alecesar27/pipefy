@@ -9,7 +9,7 @@ import requests
 from .forms import SignUpForm,  LoginForm, CreatePipeForm, UpdatePipeForm, CreatePhaseForm, CreateCardForm,UpdateCardForm
 
 
-BASE_API_URL = 'http://localhost'
+BASE_API_URL = 'http://localhost:8080'
 
 @login_required
 def home(request):
