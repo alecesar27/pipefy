@@ -14,7 +14,7 @@ Esse é um projeto que cria uma api integrando com o Pipefy para isso foi utiliz
      python3 -m venv nome_do_ambient
      executar pip install -r requirements.txt
 5- rodar cada ambiente virtualizado entrar na pasta \app mesma pasta em que esta o arquivo main.py e executar o comando:
-     - uvicorn main:app --host 127.0.0.1 --port 80 (mudar para a sua porta preferida)
+     - uvicorn main:app --host 127.0.0.1 --port 8080 (mudar para a sua porta preferida)
 6- entrar na pasta pipefy que é o frontend 
      - na mesma pasta em que está o arquivo manage.py executar o comando: python .\manage.py runserver
 
