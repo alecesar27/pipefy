@@ -18,7 +18,7 @@ https://www.python.org/downloads/
 
 4 rodar cada ambiente virtualizado
 entrar na pasta \app mesma pasta em que esta o arquivo main.py e executar o comando:
-- uvicorn main:app --host 127.0.0.1  --port 80 (mudar para a sua porta preferida)
+- uvicorn main:app --host 127.0.0.1  --port 8080 (mudar para a sua porta preferida)
 
 5 entrar na pasta pipefy que é o frontend 
     - na mesma pasta em que está o arquivo manage.py executar o comando:
